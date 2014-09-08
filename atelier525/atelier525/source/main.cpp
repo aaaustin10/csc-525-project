@@ -14,9 +14,11 @@ void render_frame(void)
 
 	glColor3f(0.2, 0.2, 0.6);
 	glBegin(GL_TRIANGLES);
-	glVertex3f(-0.5, -0.5, 0.0);
-	glVertex3f(0.5, 0.0, 0.0);
-	glVertex3f(0.0, 0.5, 0.0);
+	{
+		glVertex3f(-0.5, -0.5, 0.0);
+		glVertex3f(0.5, 0.0, 0.0);
+		glVertex3f(0.0, 0.5, 0.0);
+	}
 	glEnd();
 
 	glutSwapBuffers();
