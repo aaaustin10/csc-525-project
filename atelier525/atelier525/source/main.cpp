@@ -31,6 +31,8 @@ int main(int argc, char **argv)
     glutInitWindowSize(320, 320);
     glutCreateWindow("Atelier");
 
+	// HI
+
 	// keyboard handling
 	glutIgnoreKeyRepeat(1);
 	glutKeyboardFunc(handle_normal_keyboard_down);
