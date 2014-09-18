@@ -11,10 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\input.cpp" />
+    <ClCompile Include="source\masterio.cpp" />
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="masterio.h" />
     <ClInclude Include="source\includes.h" />
     <ClInclude Include="source\keycodes.h" />
   </ItemGroup>

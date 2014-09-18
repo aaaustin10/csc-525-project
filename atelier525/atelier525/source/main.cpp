@@ -1,11 +1,12 @@
 #include "includes.h"
 
 // start input.cpp //////////////////////////////////////////////
-void handle_normal_keyboard_down(unsigned char key, int x, int y);
-void handle_normal_keyboard_up(unsigned char key, int x, int y);
-void handle_special_keyboard_down(int key, int x, int y);
-void handle_special_keyboard_up(int key, int x, int y);
-void handle_mouse(int button, int state, int x, int y);
+//void handle_normal_keyboard_down(unsigned char key, int x, int y);
+//void handle_normal_keyboard_up(unsigned char key, int x, int y);
+//void handle_special_keyboard_down(int key, int x, int y);
+//void handle_special_keyboard_up(int key, int x, int y);
+//void handle_mouse(int button, int state, int x, int y);
+//void handle_mouse_movement(int x, int y);
 // end input.cpp ////////////////////////////////////////////////
 
 void render_frame(void)
@@ -34,15 +35,17 @@ int main(int argc, char **argv)
     glutCreateWindow("Atelier");
 
 	// HI
+	MasterIO mInOut = MasterIO();
 
 	// keyboard handling
 	glutIgnoreKeyRepeat(1);
-	glutKeyboardFunc(handle_normal_keyboard_down);
-	glutKeyboardUpFunc(handle_normal_keyboard_up);
-	glutSpecialFunc(handle_special_keyboard_down);
-	glutSpecialUpFunc(handle_special_keyboard_up);
+	glutKeyboardFunc(mInOut.handle_normal_keyboard_down);
+	glutKeyboardUpFunc(mInOut.handle_normal_keyboard_up);
+	glutSpecialFunc(mInOut.handle_special_keyboard_down);
+	glutSpecialUpFunc(mInOut.handle_special_keyboard_up);
 
-	glutMouseFunc(handle_mouse);
+	glutMouseFunc(mInOut.handle_mouse);
+	glutPassiveMotionFunc(mInOut.handle_mouse_movement);
 
 	glutDisplayFunc(render_frame);
 
