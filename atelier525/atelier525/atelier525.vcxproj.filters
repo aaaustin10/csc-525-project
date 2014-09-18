@@ -29,7 +29,7 @@
     <ClInclude Include="source\includes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="masterio.h">
+    <ClInclude Include="source\masterio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

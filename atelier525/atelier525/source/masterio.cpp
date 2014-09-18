@@ -7,7 +7,10 @@ lastYPos(0)
 {
 
 }
+MasterIO::~MasterIO()
+{
 
+}
 
 
 // ===========Keyboard Stuff=============

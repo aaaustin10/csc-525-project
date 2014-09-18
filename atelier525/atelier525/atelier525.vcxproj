@@ -15,9 +15,9 @@
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="masterio.h" />
     <ClInclude Include="source\includes.h" />
     <ClInclude Include="source\keycodes.h" />
+    <ClInclude Include="source\masterio.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{806F51CA-1DF7-440E-A840-71959C049C31}</ProjectGuid>
