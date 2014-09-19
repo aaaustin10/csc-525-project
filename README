@@ -1,5 +1,8 @@
-<h1>Contributors</h1>
-<ul>
-    <li><h2>Austin Stewart</h2></li>
-    <li><h2>Klayton Curran</h2></li>
-</ul>
+# Contributors #
+* ## Austin Stewart ##
+* ## Klayton Curran ##
+
+# Conventions #
+1.  World coordinates
+    * Scale
+        * 1.0f is 1 meter
