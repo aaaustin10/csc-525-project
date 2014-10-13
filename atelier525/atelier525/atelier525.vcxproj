@@ -12,15 +12,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\camera.cpp" />
-    <ClCompile Include="source\masterio.cpp" />
+    <ClCompile Include="source\input.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\camera.h" />
     <ClInclude Include="source\includes.h" />
+    <ClInclude Include="source\input.h" />
     <ClInclude Include="source\keycodes.h" />
-    <ClInclude Include="source\masterio.h" />
     <ClInclude Include="source\player.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

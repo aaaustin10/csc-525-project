@@ -1,19 +1,6 @@
 #include "includes.h"
-
 Player *player = (Player*) malloc(1);
 Camera *camera = (Camera*) malloc(1);
-
-MasterIO mInOut = MasterIO();
-// Wrappers for Class Member Function //////////////////////////////////////////////
-void handle_normal_keyboard_down(unsigned char key, int x, int y){ mInOut.handle_normal_keyboard_down(key, x, y); }
-void handle_normal_keyboard_up(unsigned char key, int x, int y){ mInOut.handle_normal_keyboard_up(key, x, y); }
-void handle_special_keyboard_down(int key, int x, int y){ mInOut.handle_special_keyboard_down(key, x, y); }
-void handle_special_keyboard_up(int key, int x, int y){ mInOut.handle_special_keyboard_up(key, x, y); };
-void handle_mouse(int button, int state, int x, int y){ mInOut.handle_mouse(button, state, x, y); }
-void handle_mouse_movement(int x, int y){ mInOut.handle_mouse_movement(x, y, player); }
-// This is so that we have a cdecl address to pass to glut for these functions ////////////////////////////////////////////////
-
-
 
 void render_frame(void)
 {
@@ -118,23 +105,12 @@ int main(int argc, char **argv)
     glutInitWindowSize(320, 320);
     glutCreateWindow("Atelier");
 
-	
 	myInit();
 
-	// keyboard handling
-	glutIgnoreKeyRepeat(1);
-	glutKeyboardFunc(handle_normal_keyboard_down);
-	glutKeyboardUpFunc(handle_normal_keyboard_up);
-	glutSpecialFunc(handle_special_keyboard_down);
-	glutSpecialUpFunc(handle_special_keyboard_up);
-
-	// mouse movement
-	glutMouseFunc(handle_mouse);
-	glutPassiveMotionFunc(handle_mouse_movement);
+	input::init();
 
 	glutReshapeFunc(resize);
 	glutDisplayFunc(render_frame);
-
     glutMainLoop();
 
     return 0;
