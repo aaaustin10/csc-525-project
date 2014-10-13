@@ -1,6 +1,6 @@
 #ifndef MASTERIO_H
 #define MASTERIO_H
-
+class Player;
 class MasterIO
 {
 public:
@@ -12,7 +12,7 @@ public:
 	void handle_special_keyboard_up(int key, int x, int y);
 
 	void handle_mouse(int button, int state, int x, int y);
-	void handle_mouse_movement(int x, int y);
+	void handle_mouse_movement(int x, int y, Player* p);
 
 private:
 	int lastXPos, lastYPos;

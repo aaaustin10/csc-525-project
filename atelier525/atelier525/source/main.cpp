@@ -1,5 +1,8 @@
 #include "includes.h"
 
+Player *player = (Player*) malloc(1);
+Camera *camera = (Camera*) malloc(1);
+
 MasterIO mInOut = MasterIO();
 // Wrappers for Class Member Function //////////////////////////////////////////////
 void handle_normal_keyboard_down(unsigned char key, int x, int y){ mInOut.handle_normal_keyboard_down(key, x, y); }
@@ -7,7 +10,7 @@ void handle_normal_keyboard_up(unsigned char key, int x, int y){ mInOut.handle_n
 void handle_special_keyboard_down(int key, int x, int y){ mInOut.handle_special_keyboard_down(key, x, y); }
 void handle_special_keyboard_up(int key, int x, int y){ mInOut.handle_special_keyboard_up(key, x, y); };
 void handle_mouse(int button, int state, int x, int y){ mInOut.handle_mouse(button, state, x, y); }
-void handle_mouse_movement(int x, int y){ mInOut.handle_mouse_movement(x, y); }
+void handle_mouse_movement(int x, int y){ mInOut.handle_mouse_movement(x, y, player); }
 // This is so that we have a cdecl address to pass to glut for these functions ////////////////////////////////////////////////
 
 
@@ -17,6 +20,8 @@ void render_frame(void)
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
+
+	camera->apply();
 
 	glBegin(GL_QUADS);
 	{
@@ -65,6 +70,8 @@ void render_frame(void)
 	}
 	glEnd();
 
+	
+
 	glFlush();
 	glutSwapBuffers();
 }
@@ -94,6 +101,13 @@ void myInit(){
 	glEnable(GL_DEPTH_TEST);                            // Enables Depth Testing
 	glDepthFunc(GL_LEQUAL);                                // The Type Of Depth Testing To Do
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);    // Really Nice Perspective Calculations
+
+
+	
+	player->setPosition(0.0f, 0.0f, 0.0f);
+
+	
+	camera->attachTo(player);
 }
 int main(int argc, char **argv)
 {
