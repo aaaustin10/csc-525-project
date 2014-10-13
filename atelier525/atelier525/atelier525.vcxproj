@@ -11,12 +11,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\camera.cpp" />
     <ClCompile Include="source\input.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\camera.h" />
     <ClInclude Include="source\includes.h" />
+    <ClInclude Include="source\input.h" />
     <ClInclude Include="source\keycodes.h" />
+    <ClInclude Include="source\player.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{806F51CA-1DF7-440E-A840-71959C049C31}</ProjectGuid>
