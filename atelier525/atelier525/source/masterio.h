@@ -15,7 +15,6 @@ public:
 	void handle_mouse_movement(int x, int y, Player* p);
 
 private:
-	int lastXPos, lastYPos;
 
 };
 

@@ -44,8 +44,6 @@ void Camera::apply()
 	y_lookAt = y_position + sin(pitch);
 	z_lookAt = z_position + sin(yaw)*(cos(pitch));
 
-	std::cout << "point is: " << x_up << ", " << y_up << ", " << z_up;
-
     // set the camera
 	gluLookAt(x_position, y_position, z_position,
               x_lookAt, y_lookAt, z_lookAt,

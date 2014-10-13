@@ -17,7 +17,6 @@ public:
     }
 private:
 	float x_position, y_position, z_position;
-	float x_up, y_up, z_up;
 	float x_lookAt, y_lookAt, z_lookAt;
 
     float yaw;

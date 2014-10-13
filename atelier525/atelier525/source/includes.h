@@ -6,5 +6,6 @@
 	#include "camera.h"
 	#include "player.h"
 	#include "math.h"
+	#include <windows.h>
 	#define INCLUDES_H
 #endif

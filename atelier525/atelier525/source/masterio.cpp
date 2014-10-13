@@ -1,9 +1,7 @@
 #include "includes.h"
 
 
-MasterIO::MasterIO():
-lastXPos(0),
-lastYPos(0)
+MasterIO::MasterIO()
 {
 
 }
@@ -48,12 +46,17 @@ void MasterIO::handle_mouse(int button, int state, int x, int y)
 
 void MasterIO::handle_mouse_movement(int x, int y, Player *p)
 {
-	int xChange = lastXPos - x;
-	int yChange = lastYPos - y;
-	lastXPos = x;
-	lastYPos = y;
-	p->addYaw(-(xChange/3.0f));
+	int centerX = glutGet(GLUT_WINDOW_WIDTH) / 2;
+	int centerY = glutGet(GLUT_WINDOW_HEIGHT) / 2;
+	std::cout << x << ", " << y << std::endl;
+	if (x == centerX && y == centerY){
+		return;
+	}
+	int xChange = x - centerX;
+	int yChange = centerY - y;
+	p->addYaw(xChange/3.0f);
 	p->addPitch(yChange/5.0f);
 	std::cout << xChange << " " << yChange << " " << std::endl;
 	glutPostRedisplay();
+	glutWarpPointer(centerX, centerY);
 }
