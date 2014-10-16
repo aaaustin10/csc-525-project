@@ -1,11 +1,57 @@
 #include "includes.h"
 #include "keycodes.h"
 
+Player* p;
+bool pause = false;
+bool wasdLogger[4];
+
+bool* input::getWASD(){
+	return wasdLogger;
+}
+
+void input::setPlayer(Player& player){
+	p = &player;
+}
+
 void input::consolidated_keyboard(int key, int x, int y, bool down_event)
 {
 	switch (key)
 	{
-	case '@' | KEY_SHIFT:
+	case 'p':
+		if (down_event){
+			pause = !pause;
+			std::cout << ((pause) ? "Paused" : "Resumed") << std::endl;
+		}
+		if (!pause){
+			int centerX = glutGet(GLUT_WINDOW_WIDTH) / 2;
+			int centerY = glutGet(GLUT_WINDOW_HEIGHT) / 2;
+			glutWarpPointer(centerX, centerY);
+		}
+		break;
+	case 'w':
+		if (!pause){
+			wasdLogger[0] = down_event;
+		}
+		break;
+	case 'a':
+		if (!pause){
+			wasdLogger[1] = down_event;
+		}
+		break;
+	case 's':
+		if (!pause){
+			wasdLogger[2] = down_event;
+		}
+		break;
+	case 'd':
+		if (!pause){
+			wasdLogger[3] = down_event;
+		}
+		break;
+	case 27:
+		exit(0);
+		break;
+	/*case '@' | KEY_SHIFT:
 		std::cout << "You pressed shift and @" << std::endl;
 		break;
 	case '2':
@@ -24,9 +70,11 @@ void input::consolidated_keyboard(int key, int x, int y, bool down_event)
 		std::cout << "You pressed alt and a" << std::endl;
 		break;
 	case KEY_ALTERNATE | KEY_SHIFT | '@':
-		std::cout << "You pressed alt and 2" << std::endl;
+		std::cout << "You pressed alt and 2" << std::endl;*/
 	}
-	std::cout << key << " " << (int)key << " " << x << " " << y << std::endl;
+	//std::cout << key << " " << (int)key << " " << x << " " << y << std::endl;
+
+	
 }
 
 int normal_transform(int key)
@@ -67,6 +115,32 @@ void input::handle_mouse(int button, int state, int x, int y)
 	std::cout << button << " " << state << " " << x << " " << y << std::endl;
 }
 
+void input::handle_mouse_movement(int x, int y)
+{
+	static bool ignore = false;
+	if (!pause){
+		if (!ignore){
+			int centerX = glutGet(GLUT_WINDOW_WIDTH) / 2;
+			int centerY = glutGet(GLUT_WINDOW_HEIGHT) / 2;
+			//std::cout << x << ", " << y << std::endl;
+			if (x == centerX && y == centerY){
+				return;
+			}
+			int xChange = x - centerX;
+			int yChange = centerY - y;
+			p->addYaw(xChange / 3.0f);
+			p->addPitch(yChange / 5.0f);
+			//std::cout << xChange << " " << yChange << " " << std::endl;
+
+			//glutPostRedisplay();
+			glutWarpPointer(centerX, centerY);
+			ignore = true;
+			return;
+		}
+		ignore = false;
+	}
+}
+
 void input::init()
 {
 	glutIgnoreKeyRepeat(1);
@@ -75,4 +149,5 @@ void input::init()
 	glutSpecialFunc(input::handle_special_keyboard_down);
 	glutSpecialUpFunc(input::handle_special_keyboard_up);
 	glutMouseFunc(input::handle_mouse);
+	glutPassiveMotionFunc(input::handle_mouse_movement);
 }

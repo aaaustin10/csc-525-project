@@ -17,6 +17,7 @@
     <ClCompile Include="source\player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="filereader.h" />
     <ClInclude Include="source\camera.h" />
     <ClInclude Include="source\includes.h" />
     <ClInclude Include="source\input.h" />

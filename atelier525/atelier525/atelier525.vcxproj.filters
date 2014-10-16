@@ -30,6 +30,9 @@
     <ClInclude Include="source\keycodes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="filereader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

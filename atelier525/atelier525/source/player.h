@@ -19,11 +19,10 @@ class Player{
 		void addPitch(float d);
 		void setDist(float d){dist = d;}
 
+		float getDist(){ return dist; }
 		float getX(){ return xpos; }
 		float getY(){ return ypos; }
 		float getZ(){ return zpos; }
-		int getChunkX(){ return (int) floor(xpos/16.0f); }
-		int getChunkZ(){ return (int) floor(zpos/16.0f); }
 		
 		float getYaw(){ return yaw; }
 		float getPitch(){ return pitch; }

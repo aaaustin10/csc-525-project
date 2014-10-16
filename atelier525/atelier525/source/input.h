@@ -1,6 +1,6 @@
 #ifndef INPUT_H
 	#define INPUT_H
-
+	class Player;
 	class input
 	{
 		public:
@@ -10,6 +10,11 @@
 			static void handle_special_keyboard_down(int key, int x, int y);
 			static void handle_special_keyboard_up(int key, int x, int y);
 			static void handle_mouse(int button, int state, int x, int y);
+			static void handle_mouse_movement(int x, int y);
+			static bool* getWASD();
+			static void setPlayer(Player& player);
 			static void init();
+		private:
+			
 	};
 #endif // INPUT_H

@@ -11,9 +11,9 @@ public:
     void updatePosition();
     void apply();
 
-    void attachTo(Player* p)
+    void attachTo(Player& p)
     {
-        player = p;
+        player = &p;
     }
 private:
 	float x_position, y_position, z_position;
