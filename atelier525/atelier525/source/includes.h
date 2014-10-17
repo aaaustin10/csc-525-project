@@ -3,6 +3,7 @@
 	#include "input.h"
 	#include <iostream>
 	#include <GL/glut.h>
+	#include <fstream>
 	#include "camera.h"
 	#include "player.h"
 	#include "math.h"

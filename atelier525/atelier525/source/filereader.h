@@ -1,32 +1,16 @@
-#ifndef FILEREADER
-#define FILEREADER
-#include <string>
-#include <fstream>
-class FileReader{
-public:
-	FileReader(std::string filepath) :
-		path(filepath){}
-	~FileReader(){
-		fin.close();
-	}
-	bool init(){
-		fin.open(path);
-		if (!fin.is_open()){
-			return false;
-		}
-		return true;
-	}
-	template <class T>
-	void getItem(T &item){
-		fin >> item;
-	}
+#ifndef FILEREADER_H
+	#define FILEREADER_H
+	#include "includes.h"
 
-private:
-	std::string path;
-	std::ifstream fin;
+	class FileReader{
+	public:
+		FileReader(char* filepath);
+		~FileReader();
+		bool init();
+		void get_array(void* item, int req_size);
 
-	FileReader(const FileReader&) = delete;
-	FileReader& operator=(const FileReader&) = delete;
-
-};
-#endif
+	private:
+		char* path;
+		std::fstream file;
+	};
+#endif // FILEREADER_H

@@ -3,7 +3,7 @@ Player player;
 Camera camera;
 float speed = 2.5f; // player movement speed
 int tickMS = 20; // miliseconds per tick
-GLfloat autumn[512][512][3];
+GLbyte autumn[512][512][3];
 static GLuint texName;
 
 void render_frame(void)
@@ -103,30 +103,24 @@ void myInit(){
 	camera.attachTo(player);
 
 
-	FileReader inFile(std::string("../atelier525/source/autumn.txt"));
-	if (!inFile.init()){
+	FileReader file_autumn("../atelier525/source/autumn.dat");
+	if (!file_autumn.init())
+	{
 		std::cout << "Could not open file." << std::endl;
 		exit(0);
 	}
-	for (int i = 0; i < 512; i++){
-		for (int j = 0; j < 512; j++){
-			inFile.getItem(autumn[i][j][0]);
-			inFile.getItem(autumn[i][j][1]);
-			inFile.getItem(autumn[i][j][2]);
-		}
-	}
+	file_autumn.get_array(autumn, 512 * 512 * 3 * sizeof(GLbyte));
+
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 	glGenTextures(1, &texName);
 	glBindTexture(GL_TEXTURE_2D, texName);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-		GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-		GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 512,
-		512, 0, GL_RGB, GL_FLOAT,
+		512, 0, GL_RGB, GL_UNSIGNED_BYTE,
 		autumn);
 	
 	glShadeModel(GL_SMOOTH);                            // Enable Smooth Shading
