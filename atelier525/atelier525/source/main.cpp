@@ -17,7 +17,7 @@ void render_frame(void)
 	glBegin(GL_QUADS);
 	{
 		// front wall
-		glColor3f(0.2, 0.2, 0.6); // Dark Blue Square
+		glColor3f(1, 1, 0.6); // Dark Blue Square
 		glVertex4f(-0.5, -0.5, 0.5, 1.0);
 		glVertex4f(-0.5, 0.5, 0.5, 1.0);
 		glVertex4f(0.5, 0.5, 0.5, 1.0);
