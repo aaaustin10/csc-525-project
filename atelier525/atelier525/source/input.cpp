@@ -21,11 +21,15 @@ void input::consolidated_keyboard(int key, int x, int y, bool down_event)
 		if (down_event){
 			pause = !pause;
 			std::cout << ((pause) ? "Paused" : "Resumed") << std::endl;
+			for (int i = 0; i < 4; i++){
+				wasdLogger[i] = false;
+			}
 		}
 		if (!pause){
 			int centerX = glutGet(GLUT_WINDOW_WIDTH) / 2;
 			int centerY = glutGet(GLUT_WINDOW_HEIGHT) / 2;
 			glutWarpPointer(centerX, centerY);
+			
 		}
 		break;
 	case 'w':

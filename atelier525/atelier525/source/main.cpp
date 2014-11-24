@@ -1,10 +1,13 @@
 #include "includes.h"
 Player player;
 Camera camera;
-float speed = 2.5f; // player movement speed
-int tickMS = 20; // miliseconds per tick
+float speed = 2.5f; // meters per second
 GLbyte autumn[512][512][3];
 static GLuint texName;
+
+std::chrono::time_point<std::chrono::system_clock> start, end;
+std::chrono::duration<double> frameTime; // frametime.count() within tick() or render_frame() will get time per tick in seconds
+
 
 void render_frame(void)
 {
@@ -94,9 +97,6 @@ void resize(GLint x, GLint y){
 
 void myInit(){
 
-	
-	// formula tickMS/1000 * speed gives a distance that equates to "speed" meters per second
-	player.setDist((tickMS/1000.0f) * speed);
 
 	// player default position 0, 0, 0,
 	input::setPlayer(player);
@@ -132,56 +132,53 @@ void myInit(){
 }
 
 void tick(void){
-	static int delay = 0;
+	end = std::chrono::system_clock::now();
+	frameTime = end - start;
+
+	if (frameTime.count() < 0.01){
+		return;
+	}
+	start = std::chrono::system_clock::now();
 	
-	if (delay == tickMS){
-		bool* wasd = input::getWASD();
-		static bool strafe = false;
-		static float oldDist;
-		//if forward and not backward go forward, if left or right pressed but not both or neither strafe
-		if (wasd[0]){
-			if (!wasd[2]){
-				if (wasd[1] != wasd[3]){
-					strafe = true;
-					oldDist = player.getDist();
-					player.setDist(oldDist / 2);
-				}
-				player.goForward();
+
+	static float vAcc = 0;
+	static bool grounded = true;
+
+
+	player.setDist(frameTime.count() * speed);
+	bool* wasd = input::getWASD();
+	//if forward and not backward go forward, if left or right pressed but not both or neither strafe
+	if (wasd[0]){
+		if (!wasd[2]){
+			if (wasd[1] != wasd[3]){
+				player.setDist(player.getDist() / 2);
 			}
+			player.goForward();
 		}
-		if (wasd[2]){
-			if (!wasd[0]){
-				if (wasd[1] != wasd[3]){
-					strafe = true;
-					oldDist = player.getDist();
-					player.setDist(oldDist / 2);
-				}
-				player.goBackward();
+	}
+	if (wasd[2]){
+		if (!wasd[0]){
+			if (wasd[1] != wasd[3]){
+				player.setDist(player.getDist() / 2);
 			}
+			player.goBackward();
 		}
-		if (wasd[1]){
-			if (!wasd[3]){
-				player.goLeft();
-			}
+	}
+	if (wasd[1]){
+		if (!wasd[3]){
+			player.goLeft();
 		}
+	}
 		
-		if (wasd[3]){
-			if (!wasd[1]){
-				player.goRight();
-			}
+	if (wasd[3]){
+		if (!wasd[1]){
+			player.goRight();
 		}
-		if (strafe){
-			player.setDist(oldDist);
-			strafe = false;
-		}
-		delay = 0;
-	}
-	// redisplay 4 times per tick for smooth view panning
-	if (delay%(tickMS/4) == 0){
-		glutPostRedisplay();
 	}
 	
-	delay++;
+	render_frame();
+	
+	
 }
 
 int main(int argc, char **argv)
@@ -196,6 +193,10 @@ int main(int argc, char **argv)
 	myInit();
 
 	input::init();
+
+	
+	start = std::chrono::system_clock::now();
+
 
 	glutReshapeFunc(resize);
 	glutDisplayFunc(render_frame);

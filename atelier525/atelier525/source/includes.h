@@ -4,6 +4,7 @@
 	#include <iostream>
 	#include <GL/glut.h>
 	#include <fstream>
+	#include <chrono>
 	#include "camera.h"
 	#include "player.h"
 	#include "math.h"
