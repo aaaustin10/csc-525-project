@@ -21,8 +21,8 @@ void input::consolidated_keyboard(int key, int x, int y, bool down_event)
 		if (down_event){
 			pause = !pause;
 			std::cout << ((pause) ? "Paused" : "Resumed") << std::endl;
-			for (int i = 0; i < 4; i++){
-				wasdLogger[i] = false;
+			for (int i = 0; i < 5; i++){
+				p->dir[i] = false;
 			}
 		}
 		if (!pause){
@@ -34,22 +34,27 @@ void input::consolidated_keyboard(int key, int x, int y, bool down_event)
 		break;
 	case 'w':
 		if (!pause){
-			wasdLogger[0] = down_event;
+			p->dir[0] = down_event;
 		}
 		break;
 	case 'a':
 		if (!pause){
-			wasdLogger[1] = down_event;
+			p->dir[1] = down_event;
 		}
 		break;
 	case 's':
 		if (!pause){
-			wasdLogger[2] = down_event;
+			p->dir[2] = down_event;
 		}
 		break;
 	case 'd':
 		if (!pause){
-			wasdLogger[3] = down_event;
+			p->dir[3] = down_event;
+		}
+		break;
+	case ' ':
+		if (!pause){
+			p->dir[4] = down_event;
 		}
 		break;
 	case 27:

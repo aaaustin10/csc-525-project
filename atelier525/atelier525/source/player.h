@@ -8,12 +8,16 @@
 				ypos = y;
 				zpos = z;
 			}
-			void goForward();
-			void goBackward();
-			void goLeft();
-			void goRight();
-			void goUp();
-			void goDown();
+			void setX(float x){ xpos = x; }
+			void setY(float y){ ypos = y; }
+			void setZ(float z){ zpos = z; }
+
+			void goForward(float et);
+			void goBackward(float et);
+			void goLeft(float et);
+			void goRight(float et);
+			void goUp(float et);
+			void goDown(float et);
 			void stop();
 			void addYaw(float d);
 			void addPitch(float d);
@@ -23,11 +27,19 @@
 			float getX(){ return xpos; }
 			float getY(){ return ypos; }
 			float getZ(){ return zpos; }
+
+			void move(float et);
+			void jump();
+			void fall(float et);
 		
 			float getYaw(){ return yaw; }
 			float getPitch(){ return pitch; }
+
+			bool dir[6]; // 0-w 1-a 2-s 3-d 4-space
 		private:
 			float xpos, ypos, zpos;
+			float vAcc, hAcc;
+			bool g;
 			float yaw;
 			float pitch;
 			float dist;

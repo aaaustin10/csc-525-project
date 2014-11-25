@@ -102,6 +102,7 @@ void myInit(){
 	input::setPlayer(player);
 	camera.attachTo(player);
 
+	player.setDist(speed);
 
 	FileReader file_autumn("../atelier525/source/autumn.dat");
 	if (!file_autumn.init())
@@ -141,41 +142,8 @@ void tick(void){
 	start = std::chrono::system_clock::now();
 	
 
-	static float vAcc = 0;
-	static bool grounded = true;
+	player.move(frameTime.count());
 
-
-	player.setDist(frameTime.count() * speed);
-	bool* wasd = input::getWASD();
-	//if forward and not backward go forward, if left or right pressed but not both or neither strafe
-	if (wasd[0]){
-		if (!wasd[2]){
-			if (wasd[1] != wasd[3]){
-				player.setDist(player.getDist() / 2);
-			}
-			player.goForward();
-		}
-	}
-	if (wasd[2]){
-		if (!wasd[0]){
-			if (wasd[1] != wasd[3]){
-				player.setDist(player.getDist() / 2);
-			}
-			player.goBackward();
-		}
-	}
-	if (wasd[1]){
-		if (!wasd[3]){
-			player.goLeft();
-		}
-	}
-		
-	if (wasd[3]){
-		if (!wasd[1]){
-			player.goRight();
-		}
-	}
-	
 	render_frame();
 	
 	
