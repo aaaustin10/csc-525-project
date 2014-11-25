@@ -1,7 +1,7 @@
 #include "includes.h"
 Player player;
 Camera camera;
-float speed = 2.5f; // meters per second
+float speed = 5.0f; // meters per second
 GLbyte autumn[512][512][3];
 static GLuint texName;
 
@@ -102,7 +102,7 @@ void myInit(){
 	input::setPlayer(player);
 	camera.attachTo(player);
 
-	player.setDist(speed);
+	player.setSpeed(speed);
 
 	FileReader file_autumn("../atelier525/source/autumn.dat");
 	if (!file_autumn.init())
