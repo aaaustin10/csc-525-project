@@ -20,47 +20,24 @@ void render_frame(void)
 	glBegin(GL_QUADS);
 	{
 		// front wall
-		glColor3f(1, 1, 0.6); // Dark Blue Square
-		glVertex4f(-0.5, -0.5, 0.5, 1.0);
-		glVertex4f(-0.5, 0.5, 0.5, 1.0);
-		glVertex4f(0.5, 0.5, 0.5, 1.0);
-		glVertex4f(0.5, -0.5, 0.5, 1.0);
-
-		//right wall
-		glColor3f(0.2, 0.6, 0.2); // Dark Green Square
-		glVertex4f(0.5, 0.5, 0.5, 1.0);
-		glVertex4f(0.5, 0.5, -0.5, 1.0);
-		glVertex4f(0.5, -0.5, -0.5, 1.0);
-		glVertex4f(0.5, -0.5, 0.5, 1.0);
-
-		// back wall
-		glColor3f(0.6, 0.2, 0.2); // Dark Red Square
-		glVertex4f(0.5, 0.5, -0.5, 1.0);
-		glVertex4f(-0.5, 0.5, -0.5, 1.0);
-		glVertex4f(-0.5, -0.5, -0.5, 1.0);
-		glVertex4f(0.5, -0.5, -0.5, 1.0);
-
-		// left wall
-		glColor3f(0.2, 0.6, 0.6); // Baby Blue Square
-		glVertex4f(-0.5, -0.5, 0.5, 1.0);
-		glVertex4f(-0.5, 0.5, 0.5, 1.0);
-		glVertex4f(-0.5, 0.5, -0.5, 1.0);
-		glVertex4f(-0.5, -0.5, -0.5, 1.0);
-
-		// roof
-		glColor3f(0.2, 0.2, 0.2); // grey Square
-		glVertex4f(-0.5, 0.5, 0.5, 1.0);
-		glVertex4f(-0.5, 0.5, -0.5, 1.0);
-		glVertex4f(0.5, 0.5, -0.5, 1.0);
-		glVertex4f(0.5, 0.5, 0.5, 1.0);
-
-		// floor
-		glColor3f(1.0, 1.0, 1.0); // White Square
-		glVertex4f(-0.5, -0.5, 0.5, 1.0);
-		glVertex4f(0.5, -0.5, 0.5, 1.0);
-		glVertex4f(0.5, -0.5, -0.5, 1.0);
-		glVertex4f(-0.5, -0.5, -0.5, 1.0);
-
+		glColor3f(1, 0, 0); // Dark Blue Square
+		glVertex4f(5, 0, 5, 1.0);
+		glVertex4f(5, 0, 6, 1.0);
+		glVertex4f(6, 0, 6, 1.0);
+		glVertex4f(6, 0, 5, 1.0);
+	}
+	glEnd();
+	glBegin(GL_LINES);
+	{
+		glColor3f(0.1, 0.8, 0.1);
+		for (int i = 0; i < 201; i++){
+			glVertex3i(-100,0,i-100);
+			glVertex3i(100, 0, i - 100);
+		}
+		for (int i = 0; i < 201; i++){
+			glVertex3i(i -100, 0, -100);
+			glVertex3i(i - 100, 0, 100);
+		}
 	}
 	glEnd();
 

@@ -45,7 +45,7 @@ void Camera::apply()
 	z_lookAt = z_position + sin(yaw)*(cos(pitch));
 
     // set the camera
-	gluLookAt(x_position, y_position, z_position,
-              x_lookAt, y_lookAt, z_lookAt,
+	gluLookAt(x_position, y_position+1.63, z_position,
+              x_lookAt, y_lookAt+1.63, z_lookAt,
               0.0f, 1.0f, 0.0);
 }

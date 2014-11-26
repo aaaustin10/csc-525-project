@@ -166,7 +166,7 @@ void Player::move(float et){
 	if (isMove){
 		lastYaw = yaw;
 		if (hAcc < 1){
-			hAcc += et * 1.0;
+			hAcc += et * 3.0;
 			if (hAcc > 1){
 				hAcc = 1;
 			}
@@ -174,7 +174,7 @@ void Player::move(float et){
 	}
 	else{
 		if (hAcc > 0 && g){
-			hAcc -= et * 1.0;
+			hAcc -= et * 3.0;
 			if (hAcc < 0){
 				hAcc = 0;
 			}
