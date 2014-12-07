@@ -63,7 +63,7 @@ void myInit(){
 	path.append(buf);
 	path.append("\\data\\");
 	SetCurrentDirectoryA(path.c_str());
-	renderer.read_obj("room.obj");
+	renderer.read_obj("scene.obj");
 
 	// player default position 0, 0, 0,
 	input::setPlayer(player);

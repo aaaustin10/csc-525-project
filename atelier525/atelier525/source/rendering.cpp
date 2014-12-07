@@ -282,15 +282,13 @@ texture_struct rendering::init_texture(const char* filename)
 
 	texture_struct t;
 	t.tex_data = load_texture(filename);
-
 	glGenTextures(1, &t.tex_id);
 	glBindTexture(GL_TEXTURE_2D, t.tex_id);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, t.tex_data.width,
-		t.tex_data.height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-		t.tex_data.data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+
+	gluBuild2DMipmaps(GL_TEXTURE_2D, 3, t.tex_data.width, t.tex_data.height, GL_RGB, GL_UNSIGNED_BYTE, t.tex_data.data);
 	return t;
 }
