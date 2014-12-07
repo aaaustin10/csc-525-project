@@ -2,8 +2,6 @@
 Player player;
 Camera camera;
 float speed = 5.0f; // meters per second
-GLbyte autumn[512][512][3];
-static GLuint texName;
 
 std::chrono::time_point<std::chrono::system_clock> start, end;
 std::chrono::duration<double> frameTime; // frametime.count() within tick() or render_frame() will get time per tick in seconds
@@ -20,17 +18,8 @@ void render_frame(void)
 
 	renderer.draw();
 	renderer.grid();
+	renderer.line_algorithm();
 
-	glEnable(GL_TEXTURE_2D);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-	glBindTexture(GL_TEXTURE_2D, texName);
-	glBegin(GL_QUADS);
-		glTexCoord3f(1.0f, 1.0f, 1.0f); glVertex3f(1.0f, 1.0f, 1.0f);
-		glTexCoord3f(-1.0, 1.0f, 1.0f); glVertex3f(-1.0, 1.0f, 1.0f);
-		glTexCoord3f(-1.0f, -1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, 1.0f);
-		glTexCoord3f(1.0f, -1.0f, 1.0f); glVertex3f(1.0f, -1.0f, 1.0f);
-	glEnd();
-	glDisable(GL_TEXTURE_2D);
 	glutSwapBuffers();
 }
 
@@ -71,27 +60,6 @@ void myInit(){
 
 	player.setSpeed(speed);
 
-	SetCurrentDirectoryA(buf); // this needs to be addressed
-	FileReader file_autumn("../atelier525/source/autumn.dat");
-	if (!file_autumn.init())
-	{
-		std::cout << "Could not open file." << std::endl;
-		exit(0);
-	}
-	file_autumn.get_array(autumn, 512 * 512 * 3 * sizeof(GLbyte));
-
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-	glGenTextures(1, &texName);
-	glBindTexture(GL_TEXTURE_2D, texName);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 512,
-		512, 0, GL_RGB, GL_UNSIGNED_BYTE,
-		autumn);
-	
 	glShadeModel(GL_SMOOTH);                            // Enable Smooth Shading
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);                // black Background
 	glClearDepth(1.0f);                                    // Depth Buffer Setup
@@ -108,13 +76,10 @@ void tick(void){
 		return;
 	}
 	start = std::chrono::system_clock::now();
-	
 
 	player.move(frameTime.count());
 
 	render_frame();
-	
-	
 }
 
 int main(int argc, char **argv)

@@ -25,8 +25,8 @@
 	{
 	public:
 		void grid();
-		void mistaken_line_algorithm();
-		void textured_polygons();
+		void line_algorithm();
+		GLuint init_line_algorithm();
 		void room();
 		bmp_header load_texture(const char* filename);
 		texture_struct init_texture(const char* filename);

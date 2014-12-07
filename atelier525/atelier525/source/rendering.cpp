@@ -1,20 +1,81 @@
 #include "includes.h"
 
+const int tex_size = 16;
+unsigned char line_tex[tex_size][tex_size][3];
+
 void rendering::grid()
 {
 	glBegin(GL_LINES);
 	{
 		glColor3f(0.1, 0.8, 0.1);
 		for (int i = 0; i < 200 + 1; i++){
-			glVertex3i(-100, 0, i - 100);
-			glVertex3i(100, 0, i - 100);
+			glVertex3f(-100, -0.1, i - 100);
+			glVertex3f(100, -0.1, i - 100);
 		}
 		for (int i = 0; i < 201; i++){
-			glVertex3i(i - 100, 0, -100);
-			glVertex3i(i - 100, 0, 100);
+			glVertex3f(i - 100, -.1, -100);
+			glVertex3f(i - 100, -.1, 100);
 		}
 	}
 	glEnd();
+}
+
+GLuint rendering::init_line_algorithm()
+{
+	GLuint tex_id;
+	glGenTextures(1, &tex_id);
+	glBindTexture(GL_TEXTURE_2D, tex_id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+	for (int i = 0; i < tex_size; ++i)
+		for (int j = 0; j < tex_size; ++j)
+			for (int k = 0; k < 3; ++k)
+				line_tex[i][j][k] = -1;
+
+	return tex_id;
+}
+
+void rendering::line_algorithm()
+{
+	static GLuint tex_id = init_line_algorithm();
+	static int curr_frame = 0;
+	int speed_denom = 10;
+
+	for (int i = 0; i < tex_size; i++)
+	{
+		for (int j = 0; j < 3; ++j)
+		{
+			unsigned char value;
+			if (i <= curr_frame / speed_denom)
+				value = 0;
+			else
+				value = -1;
+			line_tex[i][i][j] = value;
+		}
+	}
+
+	++curr_frame;
+	curr_frame %= tex_size * speed_denom;
+
+	glBindTexture(GL_TEXTURE_2D, tex_id);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, 3, tex_size, tex_size, GL_RGB, GL_UNSIGNED_BYTE, line_tex);
+
+	glEnable(GL_TEXTURE_2D);
+	{
+		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+
+		glBegin(GL_QUADS);
+		{
+			glTexCoord2f( 1.0f,  1.0f); glVertex3f( 14.0f,  2.0f,  -10.0f);
+			glTexCoord2f( 0.0f,  1.0f); glVertex3f( 16.0f,  2.0f,  -10.0f);
+			glTexCoord2f( 0.0f,  0.0f); glVertex3f( 16.0f,  0.0f,  -10.0f);
+			glTexCoord2f( 1.0f,  0.0f); glVertex3f( 14.0f,  0.0f,  -10.0f);
+		}
+		glEnd();
+	}
+	glDisable(GL_TEXTURE_2D);
 }
 
 enum header_type{ comment, vt, v, f, o, mtllib, usemtl, newmtl, map_Kd, notImplemented };
@@ -290,5 +351,6 @@ texture_struct rendering::init_texture(const char* filename)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
 
 	gluBuild2DMipmaps(GL_TEXTURE_2D, 3, t.tex_data.width, t.tex_data.height, GL_RGB, GL_UNSIGNED_BYTE, t.tex_data.data);
+	delete[] t.tex_data.bitmap_loc;
 	return t;
 }
