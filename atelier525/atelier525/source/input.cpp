@@ -88,7 +88,7 @@ void input::consolidated_keyboard(int key, int x, int y, bool down_event)
 
 int normal_transform(int key)
 {
-	int modifiers = glutGetModifiers() << (sizeof(int) * 8) - 3;
+	int modifiers = glutGetModifiers() << ((sizeof(int) * 8) - 3);
 	key |= modifiers;
 	if (modifiers & KEY_CONTROL)
 	{

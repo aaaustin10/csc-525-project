@@ -8,6 +8,7 @@ static GLuint texName;
 std::chrono::time_point<std::chrono::system_clock> start, end;
 std::chrono::duration<double> frameTime; // frametime.count() within tick() or render_frame() will get time per tick in seconds
 
+rendering renderer;
 
 void render_frame(void)
 {
@@ -17,29 +18,8 @@ void render_frame(void)
 
 	camera.apply();
 
-	glBegin(GL_QUADS);
-	{
-		// front wall
-		glColor3f(1, 0, 0); // Dark Blue Square
-		glVertex4f(5, 0, 5, 1.0);
-		glVertex4f(5, 0, 6, 1.0);
-		glVertex4f(6, 0, 6, 1.0);
-		glVertex4f(6, 0, 5, 1.0);
-	}
-	glEnd();
-	glBegin(GL_LINES);
-	{
-		glColor3f(0.1, 0.8, 0.1);
-		for (int i = 0; i < 201; i++){
-			glVertex3i(-100,0,i-100);
-			glVertex3i(100, 0, i - 100);
-		}
-		for (int i = 0; i < 201; i++){
-			glVertex3i(i -100, 0, -100);
-			glVertex3i(i - 100, 0, 100);
-		}
-	}
-	glEnd();
+	renderer.draw();
+	renderer.grid();
 
 	glEnable(GL_TEXTURE_2D);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
@@ -51,7 +31,6 @@ void render_frame(void)
 		glTexCoord3f(1.0f, -1.0f, 1.0f); glVertex3f(1.0f, -1.0f, 1.0f);
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
-	glFlush();
 	glutSwapBuffers();
 }
 
@@ -74,6 +53,17 @@ void resize(GLint x, GLint y){
 
 void myInit(){
 
+	std::string path;
+	const int max_path_size = 1000;
+	char buf[max_path_size];
+	if (GetCurrentDirectoryA(max_path_size, buf) == 0)
+	{
+		std::cout << "Getting the current directory failed maybe max_path is too small?" << std::endl;
+	}
+	path.append(buf);
+	path.append("\\data\\");
+	SetCurrentDirectoryA(path.c_str());
+	renderer.read_obj("room.obj");
 
 	// player default position 0, 0, 0,
 	input::setPlayer(player);
@@ -81,6 +71,7 @@ void myInit(){
 
 	player.setSpeed(speed);
 
+	SetCurrentDirectoryA(buf); // this needs to be addressed
 	FileReader file_autumn("../atelier525/source/autumn.dat");
 	if (!file_autumn.init())
 	{
