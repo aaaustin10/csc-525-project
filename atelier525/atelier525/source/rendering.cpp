@@ -155,6 +155,10 @@ void rendering::read_obj(const char* filename)
 	std::fstream file;
 	std::string buf, head;
 	file.open(filename, std::ios::in);
+	if (!file.good())
+	{
+		std::cout << "Failed to open obj file" << std::endl;
+	}
 
 	while (std::getline(file, buf))
 	{
