@@ -78,6 +78,37 @@ void rendering::line_algorithm()
 	glDisable(GL_TEXTURE_2D);
 }
 
+void rendering::poly_algorithm(){
+	static int frame_count = 0;
+	static bool reverse = false;
+	
+	for (int i = 0; i < frame_count; i++){
+		float y = 0.5 + i * 0.01;
+		glBegin(GL_LINES);
+		{
+			glColor3f(0.7, 0.7, 0.7);
+			glLineWidth(5);
+			float width = 0.01 * (100 - abs(100 - i));
+			glVertex3f(30 - width, y, -10);
+			glVertex3f(30 + width, y, -10);
+		}
+		glEnd();
+	}
+	
+	if (!reverse){
+		if (frame_count == 200){
+			reverse = true;
+		}
+		frame_count += 2;
+	}
+	else{
+		if (frame_count == 0){
+			reverse = false;
+		}
+		frame_count -= 2;
+	}
+}
+
 enum header_type{ comment, vt, v, f, o, mtllib, usemtl, newmtl, map_Kd, notImplemented };
 
 header_type get_header(std::string s)

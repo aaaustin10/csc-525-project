@@ -26,6 +26,7 @@
 	public:
 		void grid();
 		void line_algorithm();
+		void poly_algorithm();
 		GLuint init_line_algorithm();
 		void room();
 		bmp_header load_texture(const char* filename);

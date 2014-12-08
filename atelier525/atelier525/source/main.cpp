@@ -19,6 +19,7 @@ void render_frame(void)
 	renderer.draw();
 	renderer.grid();
 	renderer.line_algorithm();
+	renderer.poly_algorithm();
 
 	glutSwapBuffers();
 }
@@ -66,6 +67,8 @@ void myInit(){
 	glEnable(GL_DEPTH_TEST);                            // Enables Depth Testing
 	glDepthFunc(GL_LEQUAL);                                // The Type Of Depth Testing To Do
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);    // Really Nice Perspective Calculations
+
+	
 }
 
 void tick(void){
