@@ -115,7 +115,7 @@ void rendering::sound_in_final_room(float x, float z){
 	if (!has_played){
 		if (sqrt(pow(x - 45, 2) + pow(z - 10, 2)) < 4){
 			has_played = true;
-			PlaySoundA("you_thought_right.mp3", NULL, SND_ASYNC);
+			PlaySoundA("you_thought_right.wav", NULL, SND_ASYNC);
 		}
 	}
 	if (has_played){
