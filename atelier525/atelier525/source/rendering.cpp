@@ -109,6 +109,76 @@ void rendering::poly_algorithm(){
 	}
 }
 
+void rendering::sound_in_final_room(float x, float z){
+	// 45, 10
+	static bool has_played = false;
+	if (!has_played){
+		if (sqrt(pow(x - 45, 2) + pow(z - 10, 2)) < 4){
+			has_played = true;
+			PlaySoundA("you_thought_right.mp3", NULL, SND_ASYNC);
+		}
+	}
+	if (has_played){
+		if (sqrt(pow(x - 45, 2) + pow(z - 10, 2)) >= 4){
+			PlaySoundA(NULL, NULL, SND_ASYNC);
+			has_played = false;
+		}
+	}
+}
+
+void drawMessage(std::string s, int p = -1){ // string, decimal precision(optional)
+	bool startp = false;
+	int count = 0;
+	for (int i = 0; i < s.size(); i++){
+		if (startp){
+			count++;
+			if (count >p){
+				break;
+			}
+		}
+		if (s.at(i) == '.'){
+			if (p == 0){
+				break;
+			}
+			if (p > 0){
+				startp = true;
+			}
+		}
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, s.at(i));
+
+	}
+}
+
+void rendering::render_HUD(int x, int y){
+	glMatrixMode(GL_PROJECTION);                        // Select The Projection Matrix
+	glLoadIdentity();                                    // Reset The Projection Matrix
+	// Calculate The Aspect Ratio Of The Window
+	gluOrtho2D(0, x, y, 0);
+
+	glMatrixMode(GL_MODELVIEW);                            // Select The Modelview Matrix
+	glLoadIdentity();                                    // Reset The Modelview Matrix
+
+	glColor3f(1, 1, 1);
+	glRasterPos2i(30, 30);
+	drawMessage("Controls");
+	glRasterPos2i(30, 60);
+	drawMessage("WASD : Movement");
+	glRasterPos2i(30, 90);
+	drawMessage("Spacebar : Jump/Fly");
+	glRasterPos2i(30, 120);
+	drawMessage("Mouse : Look/Aim");
+	glRasterPos2i(30, 150);
+	drawMessage("H key to toggle this help menu.");
+
+	glMatrixMode(GL_PROJECTION);                        // Select The Projection Matrix
+	glLoadIdentity();                                    // Reset The Projection Matrix
+	// Calculate The Aspect Ratio Of The Window
+	gluPerspective(100.0f, ((GLfloat)x / (GLfloat)y), 0.1f, 1000.0f);
+
+	glMatrixMode(GL_MODELVIEW);                            // Select The Modelview Matrix
+	glLoadIdentity();                                    // Reset The Modelview Matrix
+}
+
 enum header_type{ comment, vt, v, f, o, mtllib, usemtl, newmtl, map_Kd, notImplemented };
 
 header_type get_header(std::string s)

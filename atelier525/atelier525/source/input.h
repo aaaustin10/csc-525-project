@@ -14,7 +14,8 @@
 			static bool* getWASD();
 			static void setPlayer(Player& player);
 			static void init();
+			static bool isPaused();
+			static bool isHelp();
 		private:
-			
 	};
 #endif // INPUT_H

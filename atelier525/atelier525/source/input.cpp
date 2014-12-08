@@ -3,7 +3,16 @@
 
 Player* p;
 bool pause = false;
+bool help = true;
 bool wasdLogger[4];
+
+bool input::isPaused(){
+	return pause;
+}
+
+bool input::isHelp(){
+	return help;
+}
 
 bool* input::getWASD(){
 	return wasdLogger;
@@ -55,6 +64,11 @@ void input::consolidated_keyboard(int key, int x, int y, bool down_event)
 	case ' ':
 		if (!pause){
 			p->dir[4] = down_event;
+		}
+		break;
+	case 'h':
+		if (down_event){
+			help = !help;
 		}
 		break;
 	case 27:
@@ -159,4 +173,8 @@ void input::init()
 	glutSpecialUpFunc(input::handle_special_keyboard_up);
 	glutMouseFunc(input::handle_mouse);
 	glutPassiveMotionFunc(input::handle_mouse_movement);
+
+	int centerX = glutGet(GLUT_WINDOW_WIDTH) / 2;
+	int centerY = glutGet(GLUT_WINDOW_HEIGHT) / 2;
+	glutWarpPointer(centerX, centerY);
 }

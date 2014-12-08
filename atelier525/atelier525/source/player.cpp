@@ -3,7 +3,7 @@ const float PI = 3.1415927;
 Player::Player():
 speed(0),
 yaw(PI),
-pitch(0),
+pitch(-0.5),
 xpos(0),
 ypos(0),
 zpos(0),

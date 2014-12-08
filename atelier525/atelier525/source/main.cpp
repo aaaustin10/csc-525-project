@@ -2,6 +2,7 @@
 Player player;
 Camera camera;
 float speed = 5.0f; // meters per second
+int screenX = 800, screenY = 800;
 
 std::chrono::time_point<std::chrono::system_clock> start, end;
 std::chrono::duration<double> frameTime; // frametime.count() within tick() or render_frame() will get time per tick in seconds
@@ -10,18 +11,22 @@ rendering renderer;
 
 void render_frame(void)
 {
+	if (!input::isPaused()){
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glLoadIdentity();
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
+		camera.apply();
 
-	camera.apply();
-
-	renderer.draw();
-	renderer.grid();
-	renderer.line_algorithm();
-	renderer.poly_algorithm();
-
-	glutSwapBuffers();
+		renderer.draw();
+		renderer.grid();
+		renderer.line_algorithm();
+		renderer.poly_algorithm();
+		if (input::isHelp()){
+			renderer.render_HUD(screenX, screenY);
+		}
+		renderer.sound_in_final_room(player.getX(), player.getZ());
+		glutSwapBuffers();
+	}
 }
 
 void resize(GLint x, GLint y){
@@ -29,7 +34,8 @@ void resize(GLint x, GLint y){
 	{
 		y = 1;                                        // Making Height Equal One
 	}
-
+	screenX = x;
+	screenY = y;
 	glViewport(0, 0, x, y);                        // Reset The Current Viewport
 
 	glMatrixMode(GL_PROJECTION);                        // Select The Projection Matrix
@@ -91,7 +97,7 @@ int main(int argc, char **argv)
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowPosition(100, 100);
-    glutInitWindowSize(800, 800);
+    glutInitWindowSize(screenX, screenY);
     glutCreateWindow("Atelier");
 
 	myInit();

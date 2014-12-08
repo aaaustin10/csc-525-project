@@ -27,6 +27,8 @@
 		void grid();
 		void line_algorithm();
 		void poly_algorithm();
+		void sound_in_final_room(float x, float y);
+		void render_HUD(int x, int y);
 		GLuint init_line_algorithm();
 		void room();
 		bmp_header load_texture(const char* filename);
